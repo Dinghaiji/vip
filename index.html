@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Click</title>
+    <script>
+        function getTime(){
+            return Math.round(new Date().getTime() / 1000); 
+        }
+
+        function stringToBase64(str) {
+            return btoa(str);
+        }
+
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function createCard(day){
+            var result = "----------------------------<br><br>";
+            if(day == 2){
+                result = result + "填空   "
+            } else if(day == 8) {
+                result = result + "方舟   "
+            } else if(day ==678) {
+                result = result + "餐具   "
+            } else if(day == 30) {
+                result = result + "越野   "
+            } else if(day ==365) {
+                result = result + "鲇鱼   "
+            } else if(day == 18250) {
+                result = result + "游泳   "
+            }
+            var currentTime = getTime();
+            var endTime = currentTime + day*24*60*60;
+            var exNum = getRandomInt(100, 999);
+            var cardStr = `${currentTime}${endTime}${exNum}`
+            console.log(cardStr);
+            var cardStrEncode = stringToBase64(cardStr);
+            if (cardStrEncode.charAt(cardStrEncode.length - 1) !== '=') {
+                result = result + "末尾不为“=”，可能报错   ";
+            }
+            cardStrEncode = cardStrEncode.slice(0, -1);  // 删除末位等号
+            // console.log(cardStrEncode);
+            result = result + cardStrEncode + "<br>";
+            return result;
+        }
+
+        // JavaScript 函数
+        function displayResult(day) {
+            // 获取显示结果的元素
+            var resultElement = document.getElementById("result");
+
+            const newContent = document.createElement("p");
+            newContent.innerHTML = createCard(day);
+            resultElement.appendChild(newContent);
+        }
+    </script>
+</head>
+<body>
+    <!-- 点击按钮调用 JavaScript 函数 -->
+    <button onclick="displayResult(2)">填空</button>
+    <span>&nbsp;&nbsp;</span>
+    <button onclick="displayResult(8)">方舟</button>
+    <span>&nbsp;&nbsp;</span>
+    <button onclick="displayResult(678)">餐具</button>
+    <span>&nbsp;&nbsp;</span>
+    <button onclick="displayResult(30)">越野</button>
+    <span>&nbsp;&nbsp;</span>
+    <button onclick="displayResult(365)">鲇鱼</button>
+    <span>&nbsp;&nbsp;</span>
+    <button onclick="displayResult(18250)">游泳</button>
+    <br><br><br>
+    <!-- 用于显示结果的元素 -->
+    <div id="result"></div>
+</body>
+</html>
